@@ -32,29 +32,57 @@ app.get('/api/querystu', (req, res) => {
     }
 });
 
-app.get('/api/getstuid/:id',(req,res)=>{
+app.get('/api/getstuid/:id', (req, res) => {
     const stuId = itStudents.find(element => element.id === parseInt(req.params.id));
     console.log(req.params.id);
-    if(stuId){
+    if (stuId) {
         res.send(stuId);
-    }else{
+    } else {
         res.status(404).send('ไม่พบรหัสนักศึกษานี้');
     }
 });
 
-app.post('/api/addstu',(req,res)=>{
+app.post('/api/addstu', (req, res) => {
     // get data from request body
     const stuId = req.body.id;
     const stuFname = req.body.fname;
-    const stuLname= req.body.lname;
-    const stuTel= req.body.tel;
+    const stuLname = req.body.lname;
+    const stuTel = req.body.tel;
 
-    const newStudent={
+    const newStudent = {
         id: stuId,
         'fname': stuFname,
         'lname': stuLname,
         'tel': stuTel
     };
     itStudents.push(newStudent);
-res.send(itStudents);
+    res.send(itStudents);
+});
+app.post('/api/addstu', (req, res) => {
+    // get data from request body
+    const stuId = req.body.id;
+    const stuFname = req.body.fname;
+    const stuLname = req.body.lname;
+    const stuTel = req.body.tel;
+
+    const newStudent = {
+        id: stuId,
+        'fname': stuFname,
+        'lname': stuLname,
+        'tel': stuTel
+    };
+    itStudents.push(newStudent);
+    res.send(itStudents);
+});
+
+app.put('/api/editstu/:id', (req, res) => {
+    const stuId = itStudents.find(element => element.id === parseInt(req.body.id));
+    if (stuId) {
+        stuId.fname = req.body.fname;
+        stuId.lname = req.body.lname;
+        stuId.tel = req.body.tel;
+    } else {
+        res.status(404).send('ไม่พบรหัสนักศึกษานี้');
+    }
+    res.send(itStudents);
 });
